@@ -31,6 +31,7 @@ public class PageOfCalculator extends PageObject {
 
     WebDriverWait wait = new WebDriverWait(driver, 30);
     JavascriptExecutor js = (JavascriptExecutor) driver;
+    private  String value = "Regular";
 
     @FindBy(xpath = "//*[@id='mainForm']//md-input-container/input")
     private WebElement fieldOfInstance;
@@ -44,6 +45,10 @@ public class PageOfCalculator extends PageObject {
 
     @FindBy(xpath = "//md-select[@placeholder='VM Class']//span[@class='md-select-icon']")
     private WebElement formMachineClass;
+
+   // By committedUsageBy = By.xpath(String.format("//*[@id='select_option_85']/div[contains(text(),'%s')]", value));
+
+    //String s = String.format("//div[@class='md-select-menu-container md-active md-clickable']//div[text(),'%s']",value);
     @FindBy(xpath = "//div[@class='md-select-menu-container md-active md-clickable']//div[text()='Regular']")
     private WebElement valueMachineClass;
 

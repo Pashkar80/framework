@@ -56,7 +56,7 @@ public class ResultsTestWithData extends CommonConditions {
     public void checkValueAmountPrice() {
         CommonSteps steps = new CommonSteps();
         String value = steps.getTitleValueAmount();
-        Assert.assertEquals(value, order.getAmountRent());
+        Assert.assertEquals(value,  order.getAmountRent());
     }
 
 

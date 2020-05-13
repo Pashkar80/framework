@@ -17,7 +17,6 @@ import java.util.ArrayList;
 
 
 public class CommonSteps extends  PageObject {
-   // private WebDriver driver;
     private String request = "Google Cloud Platform Pricing Calculator";
     Order order = OrderCreator.withDataFromTask();
 
