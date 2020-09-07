@@ -4,20 +4,16 @@ import entity.Order;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import pages.*;
 import service.OrderCreator;
 import util.ParseString;
+import util.TabSwitcher;
 
 import javax.naming.OperationNotSupportedException;
-import java.util.ArrayList;
 
 
 public class CommonSteps extends  PageObject {
-    private String request = "Google Cloud Platform Pricing Calculator";
     Order order = OrderCreator.withDataFromTask();
 
     @Override
@@ -67,43 +63,45 @@ public class CommonSteps extends  PageObject {
 
     }
 
-    public PageOfCalculator fillOrderForm(String value) {
+    public PageOfCalculator fillOrderForm() {
         PageOfCalculator pageOfCalculator = new PageOfCalculator();
-        pageOfCalculator.setValueOfInstance(value);
+        pageOfCalculator.setValueOfInstance(order.getCountInstance());
         pageOfCalculator.selectOperationSystem();
-        pageOfCalculator.selectMachineClass();
-        pageOfCalculator.selectMachineType();
+        pageOfCalculator.selectMachineClass(order.getClassVM().toLowerCase());
+        pageOfCalculator.selectMachineType(order.getTypeInstance());
         pageOfCalculator.addGPU();
-        pageOfCalculator.selectSelectLocalSSD();
-        pageOfCalculator.selectDataCenterLocation();
-        pageOfCalculator.selectValueCommitedUsage();
+        pageOfCalculator.selectSelectLocalSSD(order.getLocalSSD());
+        pageOfCalculator.selectDataCenterLocation(order.getRegion());
+        pageOfCalculator.selectValueCommitedUsage(order.getCommitmentTerm());
         pageOfCalculator.submitAddEstimate();
         return pageOfCalculator;
     }
 
-    public String getAmountFromGoogleForm()  {
+
+
+
+
+
+    public String getAmountFromGoogleForm(String request)  {
         CommonSteps steps= new CommonSteps();
-        String name=steps.produceEmailName();
-        String email=driver.getWindowHandle();
-        JavascriptExecutor javascriptExecutor = (JavascriptExecutor)driver;
-        javascriptExecutor.executeScript("window.open('https://cloud.google.com/');");
-        new WebDriverWait(driver,10).until(ExpectedConditions.numberOfWindowsToBe(2));
-        ArrayList<String> allWindows_1 = new ArrayList<String>(driver.getWindowHandles());
-        driver.switchTo().window(allWindows_1.get(1));
         steps.pageSearching(request);
         steps.getSearchingResult();
-        steps.fillOrderForm(order.getCountInstance());
+        steps.fillOrderForm();
         String value = steps.getTitleValueAmount();
+        ((JavascriptExecutor)driver).executeScript("window.open('https://10minutemail.net');");
+        TabSwitcher.SwitchTab(driver,1);
+        String name=steps.produceEmailName();
+        TabSwitcher.SwitchTab(driver,0);
+        driver.switchTo().frame(0);
+        driver.switchTo().frame("myFrame");
         steps.sendEmail(name);
-        String calc=driver.getWindowHandle();
-        driver.switchTo().window(email);
-        javascriptExecutor.executeScript("window.scrollBy(0,450)", "");
-        logger.info("Get amount ("+ value +" from Google form ");
+        logger.info("Get amount ("+ value +") from Google form ");
         return value;
     }
 
 
     public  String getValueAmountEmail(){
+        TabSwitcher.SwitchTab(driver,1);
         PageCreateEmail pageCreateEmail = new PageCreateEmail();
         CommonSteps steps = new CommonSteps();
         steps.openEmail();
@@ -114,7 +112,7 @@ public class CommonSteps extends  PageObject {
 
     public  String getTitleValueAmount(){
         PageOfResultsEnterData pageOfResultsEnterData = new PageOfResultsEnterData();
-        String title = pageOfResultsEnterData.getValueAmuont();
+        String title = pageOfResultsEnterData.getValueAmount();
         String value = ParseString.parseLineForWordsOnMiddle(title);
         return value;
     }
@@ -148,7 +146,6 @@ public class CommonSteps extends  PageObject {
     }
 
     public String getTitleCommitmentTerm() {
-
         PageOfResultsEnterData pageOfResultsEnterData = new PageOfResultsEnterData();
         String title = pageOfResultsEnterData.getValueCommitmentTerm();
         String value = ParseString.getPartString(title);

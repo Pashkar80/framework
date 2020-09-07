@@ -18,7 +18,7 @@ public class ResultsTestWithData extends CommonConditions {
         CommonSteps steps = new CommonSteps();
         steps.pageSearching(request);
         steps.getSearchingResult();
-        steps.fillOrderForm(order.getCountInstance());
+        steps.fillOrderForm();
         String value = steps.getTitleVirtualMachineClass();
         Assert.assertEquals(value, order.getClassVM().toLowerCase());
 

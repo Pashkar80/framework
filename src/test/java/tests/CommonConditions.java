@@ -15,7 +15,9 @@ public class CommonConditions {
 
     @BeforeTest
     public void setUp() {
+
         driver = DriverSingleton.getDriver();
+
     }
 
     @AfterTest

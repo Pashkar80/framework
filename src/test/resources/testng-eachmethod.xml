@@ -8,7 +8,6 @@
                 <methods>
                     <include name="checkValueVirtualMachineClass"/>
                     <include name="checkValueRegion"/>
-                    <include name="checkValueLocalSSD"/>
                     <include name="checkValueAmountPrice"/>
 
                 </methods>

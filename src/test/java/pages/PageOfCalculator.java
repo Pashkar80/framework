@@ -1,6 +1,7 @@
 package pages;
 
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -31,7 +32,7 @@ public class PageOfCalculator extends PageObject {
 
     WebDriverWait wait = new WebDriverWait(driver, 30);
     JavascriptExecutor js = (JavascriptExecutor) driver;
-    private  String value = "Regular";
+
 
     @FindBy(xpath = "//*[@id='mainForm']//md-input-container/input")
     private WebElement fieldOfInstance;
@@ -45,18 +46,12 @@ public class PageOfCalculator extends PageObject {
 
     @FindBy(xpath = "//md-select[@placeholder='VM Class']//span[@class='md-select-icon']")
     private WebElement formMachineClass;
-
-   // By committedUsageBy = By.xpath(String.format("//*[@id='select_option_85']/div[contains(text(),'%s')]", value));
-
-    //String s = String.format("//div[@class='md-select-menu-container md-active md-clickable']//div[text(),'%s']",value);
     @FindBy(xpath = "//div[@class='md-select-menu-container md-active md-clickable']//div[text()='Regular']")
     private WebElement valueMachineClass;
 
 
     @FindBy(xpath = "//md-select[@placeholder='Instance type']//span[@class='md-select-icon']")
     private WebElement formMachineType;
-    @FindBy(css = "md-option[value='CP-COMPUTEENGINE-VMIMAGE-N1-STANDARD-8'] div")
-    private WebElement valueMachineType;
 
 
     @FindBy(xpath = "//*[@class='md-container md-ink-ripple']")
@@ -78,29 +73,22 @@ public class PageOfCalculator extends PageObject {
 
     @FindBy(xpath = "//md-select[@placeholder='Local SSD']//span[@class='md-select-icon']")
     private WebElement selectLocalSSD;
-    @FindBy(xpath = "//div[@class='md-select-menu-container md-active md-clickable']//md-option[@value='2']")
-    private WebElement valueLocalSSD;
 
 
     @FindBy(xpath = "//md-select[@placeholder='Datacenter location']//span[@class='md-select-icon']")
     private WebElement selectDatacenterLocation;
-    @FindBy(xpath = " //div[@class='md-select-menu-container md-active md-clickable']//md-option[@value='europe-west3']")
-    private WebElement valueDatacenterLocation;
 
 
     @FindBy(xpath = "//md-select[@placeholder='Committed usage']//span[@class='md-select-icon']")
     private WebElement selectCommitedUsage;
-    @FindBy(xpath = "//*[@class='md-select-menu-container md-active md-clickable']//md-option[@value='1']")
-    private WebElement valueCommitedUsage;
 
 
     @FindBy(xpath = "//*[@id='mainForm']/descendant::button[@class='md-raised md-primary cpc-button md-button md-ink-ripple']")
     private WebElement bottonAddEstimate;
 
 
-
-    public void setValueOfInstance(String value)  {
-      // wait.until(ExpectedConditions.titleIs("Google Cloud Platform Pricing Calculator"));
+    public void setValueOfInstance(String value) {
+        // wait.until(ExpectedConditions.titleIs("Google Cloud Platform Pricing Calculator"));
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.switchTo().frame(0);
         driver.switchTo().frame("myFrame");
@@ -108,28 +96,38 @@ public class PageOfCalculator extends PageObject {
         fieldOfInstance.sendKeys(value);
     }
 
-    public void selectOperationSystem()  {
+    public void selectOperationSystem() {
         wait.until(ExpectedConditions.elementToBeClickable(formOperatingSystem));
         js.executeScript("arguments[0].click()", formOperatingSystem);
         wait.until(ExpectedConditions.elementToBeClickable(valueOperatingSystem));
         js.executeScript("arguments[0].click()", valueOperatingSystem);
-        
+
 
     }
 
-    public void selectMachineClass()  {
+    public void selectMachineClass(String value) {
         wait.until(ExpectedConditions.elementToBeClickable(formMachineClass));
         js.executeScript("arguments[0].click()", formMachineClass);
-        wait.until(ExpectedConditions.elementToBeClickable(formMachineClass));
-        js.executeScript("arguments[0].click()", valueMachineClass);
+
+
+
+        WebElement valueMachineClassBy = driver.findElement(By.xpath
+                (String.format("//div[@class='md-select-menu-container md-active md-clickable']//md-option[@value='%s']/div", value)));
+        wait.until(ExpectedConditions.elementToBeClickable(valueMachineClassBy));
+       logger.info("Value Machine Class" + valueMachineClassBy.toString());
+        js.executeScript("arguments[0].click()", valueMachineClassBy);
+
 
     }
 
 
-    public void selectMachineType() {
+    public void selectMachineType(String value) {
         wait.until(ExpectedConditions.elementToBeClickable(formMachineClass));
         js.executeScript("arguments[0].click()", formMachineType);
-        js.executeScript("arguments[0].click()", valueMachineType);
+        WebElement valueMachineTypeBy = driver.findElement
+                (By.xpath(String.format("//md-option[@class='ng-scope md-ink-ripple']//div[@class='md-text ng-binding' and contains (text(),'%s')]", value)));
+
+        js.executeScript("arguments[0].click()", valueMachineTypeBy);
 
 
     }
@@ -145,32 +143,46 @@ public class PageOfCalculator extends PageObject {
         js.executeScript("arguments[0].click()", valueTypeGPU);
     }
 
-    public void selectSelectLocalSSD() {
+
+    public void selectSelectLocalSSD(String value) {
         wait.until(ExpectedConditions.elementToBeClickable(selectLocalSSD));
         js.executeScript("arguments[0].click()", selectLocalSSD);
-        wait.until(ExpectedConditions.elementToBeClickable(valueLocalSSD));
-        js.executeScript("arguments[0].click()", valueLocalSSD);
+
+        WebElement localSSDBy = driver.findElement(By.xpath
+                (String.format("*//div[@class='md-text ng-binding' and contains(text(),'%s')]/parent::md-option", value)));
+        wait.until(ExpectedConditions.elementToBeClickable(localSSDBy));
+        js.executeScript("arguments[0].click()", localSSDBy);
+
 
     }
 
-    public void selectDataCenterLocation() {
+    public void selectDataCenterLocation(String value) {
         wait.until(ExpectedConditions.elementToBeClickable(selectDatacenterLocation));
         js.executeScript("arguments[0].click()", selectDatacenterLocation);
-        wait.until(ExpectedConditions.elementToBeClickable(valueDatacenterLocation));
-        js.executeScript("arguments[0].click()", valueDatacenterLocation);
+
+        WebElement valueDatacenterLocationBy = driver.findElement(By.xpath
+                (String.format("//div[@class='md-select-menu-container md-active md-clickable']" +
+                        "//div[@class='md-text ng-binding' and contains(text(),'%s')]/parent::md-option", value)));
+
+        wait.until(ExpectedConditions.elementToBeClickable(valueDatacenterLocationBy));
+        js.executeScript("arguments[0].click()", valueDatacenterLocationBy);
     }
 
-    public void selectValueCommitedUsage() {
+    public void selectValueCommitedUsage(String value) {
         wait.until(ExpectedConditions.elementToBeClickable(selectCommitedUsage));
         js.executeScript("arguments[0].click()", selectCommitedUsage);
-        wait.until(ExpectedConditions.elementToBeClickable(valueCommitedUsage));
-        valueCommitedUsage.click();
-        js.executeScript("arguments[0].click()", valueCommitedUsage);
+        WebElement valueCommitedUsageBy =
+                driver.findElement(By.xpath(String.format
+                        ("//*[@class='md-select-menu-container md-active md-clickable']" +
+                                "//div[@class='md-text' and contains (text(),'%s')]/parent::md-option", value)));
+        wait.until(ExpectedConditions.elementToBeClickable(valueCommitedUsageBy));
+        js.executeScript("arguments[0].click()", valueCommitedUsageBy);
 
 
     }
 
     public void submitAddEstimate() {
         bottonAddEstimate.submit();
+
     }
 }
