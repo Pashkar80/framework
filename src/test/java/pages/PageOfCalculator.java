@@ -3,10 +3,8 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -18,11 +16,6 @@ import java.util.concurrent.TimeUnit;
  */
 public class PageOfCalculator extends PageObject {
 
-    public PageOfCalculator() {
-        super();
-        PageFactory.initElements(driver, this);
-    }
-
 
     @Override
     public void openPage() {
@@ -30,9 +23,13 @@ public class PageOfCalculator extends PageObject {
 
     }
 
+    @Override
+    public void clickJavascriptExecutor(WebElement element) {
+        js.executeScript("arguments[0].click()", element);
+    }
+
     WebDriverWait wait = new WebDriverWait(driver, 30);
     JavascriptExecutor js = (JavascriptExecutor) driver;
-
 
     @FindBy(xpath = "//*[@id='mainForm']//md-input-container/input")
     private WebElement fieldOfInstance;
@@ -98,88 +95,77 @@ public class PageOfCalculator extends PageObject {
 
     public void selectOperationSystem() {
         wait.until(ExpectedConditions.elementToBeClickable(formOperatingSystem));
-        js.executeScript("arguments[0].click()", formOperatingSystem);
+        clickJavascriptExecutor(formOperatingSystem);
         wait.until(ExpectedConditions.elementToBeClickable(valueOperatingSystem));
-        js.executeScript("arguments[0].click()", valueOperatingSystem);
+        clickJavascriptExecutor(valueOperatingSystem);
 
 
     }
 
     public void selectMachineClass(String value) {
         wait.until(ExpectedConditions.elementToBeClickable(formMachineClass));
-        js.executeScript("arguments[0].click()", formMachineClass);
-
-
-
+        clickJavascriptExecutor(formMachineClass);
         WebElement valueMachineClassBy = driver.findElement(By.xpath
                 (String.format("//div[@class='md-select-menu-container md-active md-clickable']//md-option[@value='%s']/div", value)));
         wait.until(ExpectedConditions.elementToBeClickable(valueMachineClassBy));
-       logger.info("Value Machine Class" + valueMachineClassBy.toString());
-        js.executeScript("arguments[0].click()", valueMachineClassBy);
-
-
+        logger.info("Value Machine Class" + valueMachineClassBy.toString());
+        clickJavascriptExecutor(valueMachineClassBy);
     }
 
 
     public void selectMachineType(String value) {
         wait.until(ExpectedConditions.elementToBeClickable(formMachineClass));
-        js.executeScript("arguments[0].click()", formMachineType);
+        clickJavascriptExecutor(formMachineType);
         WebElement valueMachineTypeBy = driver.findElement
                 (By.xpath(String.format("//md-option[@class='ng-scope md-ink-ripple']//div[@class='md-text ng-binding' and contains (text(),'%s')]", value)));
-
-        js.executeScript("arguments[0].click()", valueMachineTypeBy);
-
-
+        clickJavascriptExecutor(valueMachineTypeBy);
     }
 
     public void addGPU() {
         wait.until(ExpectedConditions.elementToBeClickable(selectAddGPU));
-        js.executeScript("arguments[0].click()", selectAddGPU);
+        clickJavascriptExecutor(selectAddGPU);
         wait.until(ExpectedConditions.elementToBeClickable(selectNumberGPU));
-        js.executeScript("arguments[0].click()", selectNumberGPU);
+        clickJavascriptExecutor(selectNumberGPU);
         wait.until(ExpectedConditions.elementToBeClickable(valueNumberGPU));
-        js.executeScript("arguments[0].click()", valueNumberGPU);
-        js.executeScript("arguments[0].click()", selectTypeGPU);
-        js.executeScript("arguments[0].click()", valueTypeGPU);
+        clickJavascriptExecutor(valueNumberGPU);
+        clickJavascriptExecutor(selectTypeGPU);
+        clickJavascriptExecutor(valueTypeGPU);
     }
 
 
     public void selectSelectLocalSSD(String value) {
         wait.until(ExpectedConditions.elementToBeClickable(selectLocalSSD));
-        js.executeScript("arguments[0].click()", selectLocalSSD);
-
+        clickJavascriptExecutor(selectLocalSSD);
         WebElement localSSDBy = driver.findElement(By.xpath
                 (String.format("*//div[@class='md-text ng-binding' and contains(text(),'%s')]/parent::md-option", value)));
         wait.until(ExpectedConditions.elementToBeClickable(localSSDBy));
-        js.executeScript("arguments[0].click()", localSSDBy);
-
-
+        clickJavascriptExecutor(localSSDBy);
     }
+
+
 
     public void selectDataCenterLocation(String value) {
         wait.until(ExpectedConditions.elementToBeClickable(selectDatacenterLocation));
-        js.executeScript("arguments[0].click()", selectDatacenterLocation);
+        clickJavascriptExecutor(selectDatacenterLocation);
 
         WebElement valueDatacenterLocationBy = driver.findElement(By.xpath
                 (String.format("//div[@class='md-select-menu-container md-active md-clickable']" +
                         "//div[@class='md-text ng-binding' and contains(text(),'%s')]/parent::md-option", value)));
-
         wait.until(ExpectedConditions.elementToBeClickable(valueDatacenterLocationBy));
-        js.executeScript("arguments[0].click()", valueDatacenterLocationBy);
+        clickJavascriptExecutor(valueDatacenterLocationBy);
     }
 
     public void selectValueCommitedUsage(String value) {
         wait.until(ExpectedConditions.elementToBeClickable(selectCommitedUsage));
-        js.executeScript("arguments[0].click()", selectCommitedUsage);
+        clickJavascriptExecutor(selectCommitedUsage);
         WebElement valueCommitedUsageBy =
                 driver.findElement(By.xpath(String.format
                         ("//*[@class='md-select-menu-container md-active md-clickable']" +
                                 "//div[@class='md-text' and contains (text(),'%s')]/parent::md-option", value)));
         wait.until(ExpectedConditions.elementToBeClickable(valueCommitedUsageBy));
-        js.executeScript("arguments[0].click()", valueCommitedUsageBy);
-
-
+        clickJavascriptExecutor(valueCommitedUsageBy);
     }
+
 
     public void submitAddEstimate() {
         bottonAddEstimate.submit();

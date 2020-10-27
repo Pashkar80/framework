@@ -20,8 +20,6 @@ public class CommonConditions {
 
     }
 
-    @AfterTest
-    public void stopDriver() {
-        DriverSingleton.closeDriver();
-    }
+//    @AfterTest public void stopDriver() {
+//        DriverSingleton.closeDriver();}
 }

@@ -1,8 +1,6 @@
 package steps;
 
 import entity.Order;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.JavascriptExecutor;
 
 import pages.*;
@@ -16,6 +14,9 @@ import javax.naming.OperationNotSupportedException;
 public class CommonSteps extends  PageObject {
     Order order = OrderCreator.withDataFromTask();
 
+
+
+
     @Override
     public void openPage() throws OperationNotSupportedException {
 
@@ -24,7 +25,7 @@ public class CommonSteps extends  PageObject {
     public CommonSteps() {
 
     }
-    private final Logger logger = LogManager.getRootLogger();
+
 
 
     public MainPage pageSearching(String request) {
@@ -69,8 +70,8 @@ public class CommonSteps extends  PageObject {
         pageOfCalculator.selectOperationSystem();
         pageOfCalculator.selectMachineClass(order.getClassVM().toLowerCase());
         pageOfCalculator.selectMachineType(order.getTypeInstance());
-        pageOfCalculator.addGPU();
-        pageOfCalculator.selectSelectLocalSSD(order.getLocalSSD());
+       // pageOfCalculator.addGPU();
+       // pageOfCalculator.selectSelectLocalSSD(order.getLocalSSD());
         pageOfCalculator.selectDataCenterLocation(order.getRegion());
         pageOfCalculator.selectValueCommitedUsage(order.getCommitmentTerm());
         pageOfCalculator.submitAddEstimate();
@@ -88,16 +89,23 @@ public class CommonSteps extends  PageObject {
         steps.getSearchingResult();
         steps.fillOrderForm();
         String value = steps.getTitleValueAmount();
+        driver.switchTo().defaultContent();
+        logger.info("Leave all frames");
         ((JavascriptExecutor)driver).executeScript("window.open('https://10minutemail.net');");
         TabSwitcher.SwitchTab(driver,1);
         String name=steps.produceEmailName();
         TabSwitcher.SwitchTab(driver,0);
+        logger.info("Switch back on Google page");
         driver.switchTo().frame(0);
+        logger.info("Switch in first frame");
         driver.switchTo().frame("myFrame");
+        logger.info("Switch in second frame");
         steps.sendEmail(name);
         logger.info("Get amount ("+ value +") from Google form ");
         return value;
     }
+
+
 
 
     public  String getValueAmountEmail(){

@@ -14,11 +14,6 @@ public class MainPage extends PageObject {
 private  static  final  String BASE_URL=" https://cloud.google.com/";
 
 
-    public MainPage() {
-        super();
-        PageFactory.initElements(driver,this);
-    }
-
     public void openPage() {
         driver.get(BASE_URL);
         logger.info("Open page ("+BASE_URL +")is succeed");

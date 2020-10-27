@@ -14,12 +14,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
  */
 public class PageCreateEmail extends PageObject {
 
-    public PageCreateEmail() {
-        super();
-        PageFactory.initElements(driver, this);
-    }
+
     WebDriverWait wait = new WebDriverWait(driver, 120);
-    JavascriptExecutor js = (JavascriptExecutor) driver;
+
 
     @Override
     public void openPage() {
@@ -38,8 +35,7 @@ public class PageCreateEmail extends PageObject {
     private  WebElement valueAmount;
 
    public String getNameEmail(){
-        String name= mailAddress.getAttribute("value");
-        return  name;
+        return mailAddress.getAttribute("value");
    }
 
 
@@ -51,9 +47,7 @@ public class PageCreateEmail extends PageObject {
     }
 
     public String getAmount(){
-        String amount=valueAmount.getText();
-        return amount;
-
+        return valueAmount.getText();
     }
 
 }

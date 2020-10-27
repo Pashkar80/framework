@@ -8,7 +8,8 @@
                 <methods>
                     <include name="checkValueVirtualMachineClass"/>
                     <include name="checkValueRegion"/>
-                    <include name="checkValueAmountPrice"/>
+                    <include name="checkValueInstanceType"/>
+                    <include name="checkValueCommitmentTerm"/>
 
                 </methods>
             </class>

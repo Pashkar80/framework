@@ -1,10 +1,10 @@
 package pages;
 
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
+
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
+
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -14,10 +14,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class PageOfResultsEnterData extends PageObject {
 
 
-    public PageOfResultsEnterData() {
-        super();
-        PageFactory.initElements(driver, this);
-    }
+
 
     @Override
     public void openPage() {
@@ -59,50 +56,52 @@ public class PageOfResultsEnterData extends PageObject {
 
 
     public String getValueMachineClass() {
-        String value = valueClassVM.getText();
-        return value;
+     return   valueClassVM.getText();
+
     }
 
     public String getValueInstanceType() {
-        String value = valueInstanceType.getText();
-        return value;
+        return  valueInstanceType.getText();
+
     }
 
     public String getValueRegion() {
-        String value = valueRegion.getText();
-        return value;
+
+        return valueRegion.getText();
     }
 
     public String getValueLocalSSD() {
-        String value = valueLocalSSD.getText();
-        return value;
+
+        return  valueLocalSSD.getText();
     }
 
 
     public String getValueCommitmentTerm() {
-        String value = valueCommitmentTerm.getText();
-        return value;
+
+        return valueCommitmentTerm.getText();
     }
 
     public String getValueAmount() {
-        String value = valueAmount.getText();
-        return value;
+
+        return valueAmount.getText();
     }
 
     public void pushButtonEmail() {
         new WebDriverWait(driver,20).
                 until(ExpectedConditions.elementToBeClickable(buttonEmailEstimate));
-       js.executeScript("arguments[0].click()",buttonEmailEstimate);
+        clickJavascriptExecutor(buttonEmailEstimate);
+
 
 
     }
 
     public void setEmail(String email) {
-        js.executeScript("arguments[0].click()",feildEmailSet);
+        clickJavascriptExecutor(feildEmailSet);
         feildEmailSet.sendKeys(email);
     }
 
     public void sendResult() {
-        js.executeScript("arguments[0].click()",buttonSendEmail);
-    }
+        clickJavascriptExecutor(buttonSendEmail);}
+
+
 }

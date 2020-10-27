@@ -12,10 +12,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
  */
 public class PageResultsOfSearch extends PageObject {
 
-    public PageResultsOfSearch() {
-        super();
-        PageFactory.initElements(driver, this);
-    }
+
 
     @Override
     public void openPage() {
