@@ -23,13 +23,8 @@ public class PageOfCalculator extends PageObject {
 
     }
 
-    @Override
-    public void clickJavascriptExecutor(WebElement element) {
-        js.executeScript("arguments[0].click()", element);
-    }
 
     WebDriverWait wait = new WebDriverWait(driver, 30);
-    JavascriptExecutor js = (JavascriptExecutor) driver;
 
     @FindBy(xpath = "//*[@id='mainForm']//md-input-container/input")
     private WebElement fieldOfInstance;
@@ -52,7 +47,7 @@ public class PageOfCalculator extends PageObject {
 
 
     @FindBy(xpath = "//*[@class='md-container md-ink-ripple']")
-    // @FindBy(xpath = "//md-checkbox[@class='ng-pristine ng-valid ng-empty ng-touched']/div[@class='md-container md-ink-ripple']")
+
     private WebElement selectAddGPU;
 
 

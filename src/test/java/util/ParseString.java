@@ -4,9 +4,6 @@ package util;
  * Created by user on 24.11.2019.
  */
 public class ParseString {
-//    public static void main(String[] args) {
-//        ParseString.getPartString("Total Estimated Cost: USD 1,082.77 per 1 month")
-//    }
 
     public static String getPartString(String startLine) {
         String partLine = "";

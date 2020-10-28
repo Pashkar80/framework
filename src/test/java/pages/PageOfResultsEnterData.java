@@ -90,9 +90,6 @@ public class PageOfResultsEnterData extends PageObject {
         new WebDriverWait(driver,20).
                 until(ExpectedConditions.elementToBeClickable(buttonEmailEstimate));
         clickJavascriptExecutor(buttonEmailEstimate);
-
-
-
     }
 
     public void setEmail(String email) {
